@@ -2,7 +2,7 @@
     "version": 2,
     "functions": {
       "api/index.php": {
-        "runtime": "vercel-php@1.6.0"  // Coba gunakan versi terbaru
+        "runtime": "vercel-php@1.6.0"  // Coba versi terbaru
       }
     },
     "routes": [
