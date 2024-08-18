@@ -1,14 +1,8 @@
 {
     "version": 2,
-    "builds": [
-      {
-        "src": "public/**",
-        "use": "@vercel/php"
-      }
-    ],
     "functions": {
       "api/index.php": {
-        "runtime": "vercel-php@1.4.0"
+        "runtime": "vercel-php@1.6.0"  // Coba gunakan versi terbaru
       }
     },
     "routes": [
