@@ -133,7 +133,6 @@ class CartController extends Controller
         $provinces = Province::orderBy('name', 'ASC')->get();
 
         $subTotal = Cart::subtotal(2, '.', '');
-        $discount = 0;
 
         // Calculate Shipping
         if ($customerAddress) {
@@ -147,21 +146,20 @@ class CartController extends Controller
 
             if ($shippingInfo) {
                 $totalShippingCharge = $totalQty * $shippingInfo->amount;
-                $grandTotal = ($subTotal - $discount) + $totalShippingCharge;
+                $grandTotal = $subTotal + $totalShippingCharge;
             } else {
                 $totalShippingCharge = 0;
-                $grandTotal = ($subTotal - $discount);
+                $grandTotal = $subTotal;
             }
         } else {
             $totalShippingCharge = 0;
-            $grandTotal = ($subTotal - $discount);
+            $grandTotal = $subTotal;
         }
 
         return view('front.checkout', [
             'provinces' => $provinces,
             'customerAddress' => $customerAddress,
             'totalShippingCharge' => $totalShippingCharge,
-            'discount' => $discount,
             'grandTotal' => $grandTotal,
         ]);
     }
@@ -208,7 +206,6 @@ class CartController extends Controller
 
         if ($request->payment_method == 'cod') {
             $shipping = 0;
-            $discount = 0;
             $subTotal = Cart::subtotal(2, '.', '');
 
             $shippingInfo = ShippingCharge::where('province_id', $request->province)->first();
@@ -220,10 +217,10 @@ class CartController extends Controller
 
             if ($shippingInfo) {
                 $shipping = $totalQty * $shippingInfo->amount;
-                $grandTotal = ($subTotal - $discount) + $shipping;
+                $grandTotal = $subTotal + $shipping;
             } else {
                 $shipping = 0;
-                $grandTotal = ($subTotal - $discount);
+                $grandTotal = $subTotal;
             }
 
             $order = new Order;
@@ -290,8 +287,6 @@ class CartController extends Controller
 
     public function getOrderSummary(Request $request){
         $subTotal = Cart::subtotal(2,'.','');
-        $discount = 0;
-        $discountString = '';
         
         if ($request->province_id > 0) {
             $shippingInfo = ShippingCharge::where('province_id',$request->province_id)->first();
@@ -303,26 +298,22 @@ class CartController extends Controller
             
             if ($shippingInfo != null) {
                 $shippingCharge = $totalQty * $shippingInfo->amount;
-                $grandTotal = ($subTotal - $discount) + $shippingCharge;
+                $grandTotal = $subTotal + $shippingCharge;
 
                 return response()->json([
                     'status' => true,
                     'grandTotal' => number_format($grandTotal,2),
-                    'discount' => number_format($discount,2),
-                    'discountString' => $discountString,
                     'shippingCharge' => number_format($shippingCharge,2),
                 ]);
             } else {
                 $shippingInfo = ShippingCharge::where('province_id', 'rest_of_world')->first();
                 
                 $shippingCharge = $totalQty * $shippingInfo->amount;
-                $grandTotal = ($subTotal - $discount) + $shippingCharge;
+                $grandTotal = $subTotal + $shippingCharge;
 
                 return response()->json([
                     'status' => true,
                     'grandTotal' => number_format($grandTotal,2),
-                    'discount' => number_format($discount,2),
-                    'discountString' => $discountString,
                     'shippingCharge' => number_format($shippingCharge,2),
                 ]);
             }
@@ -330,9 +321,7 @@ class CartController extends Controller
         } else {
             return response()->json([
                 'status' => true,
-                'grandTotal' => number_format(($subTotal - $discount),2),
-                'discount' => number_format($discount,2),
-                'discountString' => $discountString,
+                'grandTotal' => number_format($subTotal,2),
                 'shippingCharge' => number_format(0,2),
             ]);
         }

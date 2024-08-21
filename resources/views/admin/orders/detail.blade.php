@@ -31,7 +31,7 @@
                                 <address>
                                     <strong>{{ $order->first_name.' '.$order->last_name }}</strong><br>
                                     {{$order->address}}<br>
-                                    {{$order->city}}, {{$order->zip}} {{$order->countryName}}<br>
+                                    {{$order->city}}, {{$order->zip}} {{$order->provinceName}}<br>
                                     Phone: {{$order->mobile}}<br>
                                     Email: {{$order->email}}
                                 </address>

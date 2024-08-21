@@ -3,7 +3,7 @@
 namespace App\Exports;
 
 use App\Models\Order;
-use App\Models\Country; // Import the Country model
+use App\Models\Province; // Import the Province model
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Illuminate\Support\Collection;
@@ -21,8 +21,6 @@ class ExportOrder implements FromCollection, WithHeadings
             'invoice_number',
             'subtotal',
             'shipping',
-            'coupon_code',
-            'discount',
             'grand_total',
             'payment_status',
             'status',
@@ -31,7 +29,7 @@ class ExportOrder implements FromCollection, WithHeadings
             'last_name',
             'email',
             'mobile',
-            'country_id',
+            'province_id',
             'address',
             'apartment',
             'city',
@@ -49,12 +47,12 @@ class ExportOrder implements FromCollection, WithHeadings
                 4 => 'Cancelled',
             ];
 
-            // Retrieve the country name using the Country model
-            if ($order->country_id === 'rest_of_world') {
-                $countryName = 'Rest of The World';
+            // Retrieve the province name using the Province model
+            if ($order->province_id === 'rest_of_world') {
+                $provinceName = 'Rest of The World';
             } else {
-                $country = Country::find($order->country_id);
-                $countryName = $country ? $country->name : '';
+                $province = Province::find($order->province_id);
+                $provinceName = $province ? $province->name : '';
             }
 
             return [
@@ -62,8 +60,6 @@ class ExportOrder implements FromCollection, WithHeadings
                 'Invoice Number' => $order->invoice_number,
                 'Subtotal' => $order->subtotal,
                 'Shipping' => $order->shipping,
-                'Coupon Code' => $order->coupon_code,
-                'Discount' => $order->discount,
                 'Grand Total' => $order->grand_total,
                 'Payment Status' => $paymentStatusMap[$order->payment_status] ?? 'Unknown', // Map payment status
                 'Order Status' => $order->status, // Conditionally set status
@@ -72,7 +68,7 @@ class ExportOrder implements FromCollection, WithHeadings
                 'Last Name' => $order->last_name,
                 'Email' => $order->email,
                 'Mobile' => $order->mobile,
-                'Country' => $countryName, // Use 'Country' instead of 'Country ID'
+                'Province' => $provinceName, // Use 'Province' instead of 'Province ID'
                 'Address' => $order->address,
                 'Apartment' => $order->apartment,
                 'City' => $order->city,
@@ -92,8 +88,6 @@ class ExportOrder implements FromCollection, WithHeadings
             'Invoice Number',
             'Subtotal',
             'Shipping',
-            'Coupon Code',
-            'Discount',
             'Grand Total',
             'Payment Status',
             'Order Status',
@@ -102,7 +96,7 @@ class ExportOrder implements FromCollection, WithHeadings
             'Last Name',
             'Email',
             'Mobile',
-            'Country', // Change 'Country ID' to 'Country'
+            'Province', // Change 'Province ID' to 'Province'
             'Address',
             'Apartment',
             'City',

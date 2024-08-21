@@ -49,11 +49,6 @@
                 <th colspan="3" align="right">Subtotal : </th>
                 <td>Rp {{number_format($mailData['order']->subtotal,2) }}</td>
             </tr>
-            
-            <tr>
-                <th colspan="3" align="right">Discount : {{ (!empty($mailData['order']->coupon_code)) ? '('.$mailData['order']->coupon_code.')' : ''}}</th>
-                <td>Rp {{number_format($mailData['order']->discount,2) }}</td>
-            </tr>
             <tr>
                 <th colspan="3" align="right">Shipping : </th>
                 <td>Rp {{number_format($mailData['order']->shipping,2) }}</td>

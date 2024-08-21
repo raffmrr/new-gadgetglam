@@ -138,11 +138,6 @@
                                 <span class="ms-auto">Rp {{ number_format($data['order']->subtotal, 2) }} </span>
                             </li>
                             <li class="list-group-item d-flex">
-                                <span>Discount {{ (!empty($data['order']->coupon_code)) ? '('.$data['order']->coupon_code.')' : '' }}
-                                </span>
-                                <span class="ms-auto">Rp {{ number_format($data['order']->discount, 2) }} </span>
-                            </li>
-                            <li class="list-group-item d-flex">
                                 <span>Shipping</span>
                                 <span class="ms-auto">Rp {{ number_format($data['order']->shipping, 2) }} </span>
                             </li>

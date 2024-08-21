@@ -174,13 +174,11 @@
                     <div class="total-left w-75 float-left" align="right">
                         <p>Sub Total</p>
                         <p>Shipping Fee</p>
-                        <p>Discount</p>
                         <p>Grand Total</p>
                     </div>
                     <div class="total-right float-left text-bold">
                         <p>Rp {{ number_format($data['order']->subtotal, 2) }}</p>
                         <p>Rp {{ number_format($data['order']->shipping, 2) }}</p>
-                        <p> - Rp {{ number_format($data['order']->discount, 2) }}</p>
                         <p>Rp {{ number_format($data['order']->grand_total, 2) }}</p>
                     </div>
                     <div style="clear: both;"></div>

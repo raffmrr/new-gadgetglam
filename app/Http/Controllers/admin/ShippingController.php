@@ -5,7 +5,7 @@ namespace App\Http\Controllers\admin;
 use App\Exports\ExportShipping;
 use App\Http\Controllers\Controller;
 use App\Imports\ShippingImport;
-use App\Models\Province; // Change Country to Province
+use App\Models\Province;
 use App\Models\ShippingCharge;
 use PDF;
 use Carbon\Carbon;

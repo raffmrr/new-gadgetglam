@@ -18,7 +18,7 @@
 <!-- Main content -->
 <section class="content">
     <!-- Default box -->
-    <form action="" method="POST" name="productForm" id="productForm">
+    <form action="{{ route('products.store') }}" method="POST" name="productForm" id="productForm">
         @csrf
         <div class="container-fluid">
             <div class="row">

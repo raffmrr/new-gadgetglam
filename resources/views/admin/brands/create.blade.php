@@ -79,15 +79,7 @@
 
                 if(response["status"] == true){
 
-				window.location.href="{{ route('brands.index') }}";	
-
-                    //$("#name").removeClass('is-invalid')
-                    //    .siblings('p')
-                    //    .removeClass('invalid-feedback').html("");
-
-					//$("#slug").removeClass('is-invalid')
-					//.siblings('p')
-                    //.removeClass('invalid-feedback').html("");
+				window.location.href="{{ route('brands.index') }}";
 
                 }else{
                     var errors = response['errors']

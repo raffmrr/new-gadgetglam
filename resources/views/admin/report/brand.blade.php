@@ -114,7 +114,7 @@
         <img class="pemko" src="https://i.imgur.com/Fs00trU.png" style="width: 120px;">
     </div>
     <div class="headtext">
-        <h3 style="margin: 0px;">Budi Store </h3>
+        <h3 style="margin: 0px;">Gadget Glam </h3>
         <p style="margin: 0px;">Jalan Jauh Banget</p>
         <p style="margin: 0px;">Telp. 0823 2345 2793</p>
     </div>

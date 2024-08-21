@@ -127,7 +127,7 @@
             <thead>
                 <tr>
                     <th style="text-align:center;" class="w-10">ID</th>
-                    <th style="text-align:center;" class="w-50">Country Name</th>
+                    <th style="text-align:center;" class="w-50">Province Name</th>
                     <th style="text-align:center;" class="w-50">Amount</th>
                 </tr>
             </thead>
@@ -136,10 +136,10 @@
                 <tr>
                     <td style="text-align:center;">{{$shippingCharge->id}}</td>
                     <td>
-                        @if ($shippingCharge->country_id === 'rest_of_world')
+                        @if ($shippingCharge->province_id === 'rest_of_world')
                             Rest of World
                         @else
-                            {{ $shippingCharge->country->name }}
+                            {{ $shippingCharge->province->name }}
                         @endif
                     </td>
                     <td style="text-align:center;">Rp {{number_format($shippingCharge->amount) }}</td>

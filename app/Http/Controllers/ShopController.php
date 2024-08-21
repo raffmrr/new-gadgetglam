@@ -6,22 +6,20 @@ use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\ProductRating;
-use App\Models\subCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
 class ShopController extends Controller
 {
-    public function index(Request $request, $categorySlug = null, $subCategorySlug = null) {
+    public function index(Request $request, $categorySlug = null) {
     $categorySelected='';
-    $subCategorySelected='';
     $brandsArray = [];
 
     if (!empty($request->get('brand'))) {
         $brandsArray = explode(',', $request->get('brand'));
     }
 
-    $categories = Category::orderBy('name', 'ASC')->with('sub_category')->where('status',1)->get();
+    $categories = Category::orderBy('name', 'ASC')->where('status',1)->get();
     $brands = Brand::orderBy('name', 'ASC')->where('status',1)->get();
     $products = Product::where('status',1);
 
@@ -30,12 +28,6 @@ class ShopController extends Controller
         $category = Category::where('slug', $categorySlug)->first();
         $products = $products->where('category_id', $category->id);
         $categorySelected = $category->id;
-    }
-    
-    if(!empty($subCategorySlug)){
-        $subCategory = subCategory::where('slug', $subCategorySlug)->first();
-        $products = $products->where('sub_category_id', $subCategory->id);
-        $subCategorySelected = $subCategory->id;
     }
 
     if (!empty($request->get('brand'))) {
@@ -76,7 +68,6 @@ class ShopController extends Controller
     $data['brands'] = $brands;
     $data['products'] = $products;
     $data['categorySelected'] = $categorySelected;
-    $data['subCategorySelected'] = $subCategorySelected;
     $data['brandsArray'] = $brandsArray;
     $data['priceMax'] = (intval($request->get('price_max')) == 0) ? 1000000 : $request->get('price_max');
     $data['priceMin'] = intval($request->get('price_min'));

@@ -3,7 +3,7 @@
 namespace App\Exports;
 
 use App\Models\ShippingCharge;
-use App\Models\Country;
+use App\Models\Province;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 
@@ -12,28 +12,28 @@ class ExportShipping implements FromCollection, WithHeadings
     public function collection()
     {
         $shippingCharges = ShippingCharge::select(
-            'country_id',
+            'province_id',
             'amount'
         )->get();
         
         $shippingCharges = $shippingCharges->map(function ($shippingCharge) {
-            if ($shippingCharge->country_id === 'rest_of_world') {
-                $countryName = 'Rest of The World';
+            if ($shippingCharge->province_id === 'rest_of_world') {
+                $provinceName = 'Rest of The World';
             } else {
-                $country = Country::find($shippingCharge->country_id);
-                $countryName = $country ? $country->name : '';
+                $province = Province::find($shippingCharge->province_id);
+                $provinceName = $province ? $province->name : '';
             }
 
             return [
-                'country' => $countryName,
+                'province' => $provinceName,
                 'amount' => $shippingCharge->amount,
             ];
         });
 
         // Add 'Rest of World' if it doesn't exist in the ShippingCharge table
-        if (!$shippingCharges->contains('country', 'Rest of World')) {
+        if (!$shippingCharges->contains('province', 'Rest of World')) {
             $shippingCharges->push([
-                'country' => 'Rest of The World',
+                'province' => 'Rest of The World',
                 'amount' => '', // You can set the amount to an empty string or any default value
             ]);
         }
@@ -44,7 +44,7 @@ class ExportShipping implements FromCollection, WithHeadings
     public function headings(): array
     {
         return [
-            'Country Name',
+            'Province Name',
             'Amount',
         ];
     }

@@ -132,7 +132,6 @@
                     <th style="text-align:center;" class="w-50">Description</th>
                     <th style="text-align:center;" class="w-50">Price</th>
                     <th style="text-align:center;" class="w-40">Category</th>
-                    <th style="text-align:center;" class="w-40">Sub Category</th>
                     <th style="text-align:center;" class="w-40">Brand</th>
                     <th style="text-align:center;" class="w-10">Qty</th>
                     <th style="text-align:center;" class="w-20">Status</th>
@@ -146,7 +145,6 @@
                     <td>{{$product->description}}</td>
                     <td>Rp {{number_format($product->price)}}</td>
                     <td>{{$product->category->name}}</td>
-                    <td>{{$product->subcategory->name}}</td>
                     <td>{{$product->brand->name}}</td>
                     <td>{{$product->qty}}</td>
                     <td style="text-align:center;">
