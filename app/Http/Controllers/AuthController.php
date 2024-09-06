@@ -64,34 +64,27 @@ class AuthController extends Controller
     }
 
     public function authenticate(Request $request) {
-        $validator = Validator::make($request->all(),[
+        $validator = Validator::make($request->all(), [
             'email' => 'required|email',
             'password' => 'required',
         ]);
-
+    
         if ($validator->passes()) {
-
-            if(Auth::attempt(['email' => $request->email, 'password' => $request->password], $request->get('remember'))) {
-
-                if (!session()->has('url.intended')) {
-                    return redirect()->route('account.profile');
-                }
-                
-                return redirect(session()->get('url.intended'));
-
+            if (Auth::attempt(['email' => $request->email, 'password' => $request->password], $request->get('remember'))) {
+                $intendedUrl = session()->get('url.intended', route('account.profile'));
+                \Log::info('Redirecting to URL:', ['url' => $intendedUrl]); // Log URL
+                return redirect()->to($intendedUrl);
             } else {
-                //session()->flash('error', 'Either email/password is incorrect.');
                 return redirect()->route('account.login')
                     ->withInput($request->only('email'))
                     ->with('error', 'Either Email/Password is Incorrect.');
             }
-
         } else {
             return redirect()->route('account.login')
-            ->withErrors($validator)
-            ->withInput($request->only('email'));
+                ->withErrors($validator)
+                ->withInput($request->only('email'));
         }
-    }
+    }        
 
     public function profile() {
 
@@ -194,9 +187,13 @@ class AuthController extends Controller
     
     public function logout() {
         Auth::logout();
+        // Clear session data if needed
+        session()->flush(); // Optional: clear all session data
+    
         return redirect()->route('account.login')
-        ->with('success', 'You Successfully Logged Out!');
+            ->with('success', 'You Successfully Logged Out!');
     }
+    
 
     public function orders() {
 
